@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="styles.css">
+  
+</head>
+<body>
+  <div class="wrapper">
+    <div id="result">0</div>
+
+    <div class="buttons-wrapper">
+      <div class="numbers-wrapper">
+        <button id="btn-0">0</button>
+        <button id="btn-1" onclick="updateCalc('1')">1</button>
+        <button id="btn-2" onclick="updateCalc('2')">2</button>
+        <button id="btn-3" onclick="updateCalc('3')">3</button>
+        <button id="btn-4" onclick="updateCalc('4')">4</button>
+        <button id="btn-5" onclick="updateCalc('5')">5</button>
+        <button id="btn-6" onclick="updateCalc('6')">6</button>
+        <button id="btn-7" onclick="updateCalc('7')">7</button>
+        <button id="btn-8" onclick="updateCalc('8')">8</button>
+        <button id="dot" onclick="updateCalc('.')">.</button>
+        <button id="btn-9" onclick="updateCalc('9')">9</button>
+        <button id="equals" onclick="evalCalc()">=</button>
+      </div>
+      
+
+      <div class="operations-wrapper">
+        <button id="plus" onclick="updateCalc('+')">+</button>
+        <button id="minus" onclick="updateCalc('-')">-</button>
+        <button id="divide" onclick="updateCalc('/')">/</button>
+        <button id="multiply" onclick="updateCalc('*')">*</button>
+        <button id="modulus" onclick="updateCalc('%')">%</button>
+        <button id="clear" onclick="clearCalc()">C</button>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/13.0.0/math.js" integrity="sha512-YwFcgvV5CtE1kAnYDaIfoeydQnjRd/9YvYvi4MtRuFGAYVilHTD8qvvHrI/IJ7umguCooEUfctGo/9EKqdd1OA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="script.js"></script>
+</body>
+</html>

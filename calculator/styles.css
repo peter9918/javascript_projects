@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1.5rem;
+}
+
+.wrapper {
+  width: fit-content;
+}
+
+#result {
+  font-size: 3rem;
+  padding: .5rem;
+  margin: .5rem;
+  border: 2px solid #000;
+  text-align: end;
+}
+
+button {
+  padding: .5rem;
+  width: auto;
+}
+
+.buttons-wrapper {
+  display: flex;
+}
+
+.numbers-wrapper {
+  margin-right: 1rem;
+  display: grid;
+  grid-template-rows: 4rem 4rem 4rem 4rem;
+  grid-template-columns: 4rem 4rem 4rem;
+  gap: .2rem;
+}
+
+.operations-wrapper {
+  display: grid;
+  grid-template-rows: 4rem 4rem 4rem;
+  grid-template-columns: 4rem 4rem;
+}
+
