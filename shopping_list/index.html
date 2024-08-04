@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping List</title>
+  <script src="script.js" defer></script>
+  <style>
+    #input-wrapper {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    #input, #add-item {
+      padding: 5px;
+    }
+    ul {
+      list-style: circle;
+    }
+    li {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>My shopping list</h1>
+  <div id="input-wrapper">
+    <h2>Enter an item:</h2>
+    <input type="text" id="input">
+    <button id="add-item">Add item</button>
+  </div>
+
+  <ul id="shopping-list">
+
+  </ul>
+
+  
+</body>
+</html>
