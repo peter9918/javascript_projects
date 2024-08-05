@@ -2,11 +2,6 @@ const inputText = document.querySelector("#input");
 const addBtn = document.querySelector("#add-item");
 const shoppingList = document.querySelector("#shopping-list");
 
-let deleteBtnList = []
-let shoppingListItems = []
-let itemWrapperList = []
-
-
 function addNewItem(text) {
     const newItemWrapper = document.createElement("li");
     newItemWrapper.className = "newItemWrapper";
@@ -26,7 +21,6 @@ function addNewItem(text) {
     shoppingList.appendChild(newItemWrapper);
 }
 
-
 addBtn.addEventListener("click", () => {
     if (inputText.value) {
         addNewItem(inputText.value);
@@ -36,4 +30,17 @@ addBtn.addEventListener("click", () => {
     inputText.value = "";
     inputText.focus();   
 })
+
+document.addEventListener("beforeunload", (e) => {
+    window.alert("lala");
+    e.preventDefault();
+});
+
+window.addEventListener("beforeunload", (e) => {
+    if (shoppingList.innerHTML) {
+        e.preventDefault()
+        return "";        
+    }
+    else {console.log("empty")}
+});
 
