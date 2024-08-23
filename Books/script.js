@@ -55,9 +55,11 @@ function Book(title, author, pages, read) {
       return `${title} by ${author}, ${pages} number of pages, ${read ? "this book is read" : "not read yet"}`;
     }
 };
-const book1 = new Book("blabla", "Mihai Eminescu", 20, false);
-const book2 = new Book("bla", "Mihai Citea", 90, true);
-myLibrary.push(book1, book2)
+
+// DUMMY BOOK OBJECTS
+// const book1 = new Book("blabla", "Mihai Eminescu", 20, false);
+// const book2 = new Book("bla", "Mihai Citea", 90, true);
+// myLibrary.push(book1, book2)
 
 function clearTable() {
     document.querySelectorAll("tr").forEach((row) => {        
@@ -146,20 +148,3 @@ function displayLibrary() {
             tableHeader.style.visibility = "hidden";
         }
 };
-
-function addBookToLibrary() {
-    const title = prompt("Add a new book to the library. \nBook title: ");
-    const author = prompt("book's author: ");
-    const pages = Number(prompt("number of pages: "));
-    let read = prompt("Have you read the book? y/n");
-    if (read === "y") {
-        read = true;
-    } else {
-        read = false;
-    }
-    const book = new Book(title, author, pages, read);
-    myLibrary.push(book);
-    alert("book added to library successfully!");
-}
-
-// addBookToLibrary()
