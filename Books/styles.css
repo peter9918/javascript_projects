@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif;
+  background-color: #f7f7f7;
+}
+
+#main-heading {
+  font-size: 3rem;
+  margin: 1rem;
+}
+
+#modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+table {
+  font-size: 1.5rem;
+  /* border: 1px solid black; */
+  margin-bottom: 2rem;
+}
+
+th {
+  border: 1px solid black;
+  padding: 2px;
+  width: 12rem;
+  background-color: #70c3ff;
+}
+
+td {
+  border-bottom: 1px solid black;
+  text-align: center;
+  padding: 2px;
+  background-color: #c2c2c2;
+}
+
+tr {
+  margin-bottom: .5rem;
+}
+
+#table-header {
+  visibility: hidden;
+}
+
+#options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+button,
+#f-options * {
+  font-size: 1.5rem;
+  padding: .5rem;
+  background-color: #70c3ff;
+  border-radius: .5rem;
+}
+
+.delete-btn,
+.change-read-btn {
+  width: fit-content;
+  font-size: 1rem;
+  padding: .2rem;
+  margin: .1rem .2rem;
+}
+
+button:hover,
+#f-options *:hover {
+  cursor: pointer;
+  background-color: #5fa2d2
+}
+
+input {
+  font-size: 1.5rem;
+  padding: .2rem;
+  border: 1px solid black;
+}
+
+dialog {
+  width: fit-content;
+  padding: 1.5rem;
+}
+
+form {
+  font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field-wrapper {
+  margin-bottom: 1rem;
+}
+
+input[type=checkbox] {
+  width: 20px;
+  height: 20px;
+}
+
+/* #f-options * {
+  padding: .5rem;
+  width: fit-content;
+  background: #70c3ff;
+  border-radius: .5rem;
+} */
+
+
+/* #modal-container {
+  width: 100vw;
+  height: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */

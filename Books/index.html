@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Books</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <h1 id="main-heading">BOOK LIBRARY</h1>
+  <table>
+    <tr id="table-header">
+      <th>TITLE</th>
+      <th>AUTHOR</th>
+      <th>PAGES</th>
+      <th>READ</th>
+    </tr>
+  </table>
+
+  <section id="options">
+    <button type="button" id="display-library">Show library</button>
+
+    <button type="button" id="open-modal">Add a book</button>
+    
+    <dialog id="modal">
+      <form id="book-form" method="dialog">
+        <div class="form-field-wrapper">
+          <label for="f-title">Title:</label>
+          <input type="text" id="f-title" name="f-title" required>
+        </div>
+
+        <div class="form-field-wrapper">
+          <label for="f-author">Author:</label>
+          <input type="text" id="f-author" name="f-author" required>
+        </div>
+
+        <div class="form-field-wrapper">
+          <label for="f-pages">Number of pages:</label>
+          <input type="number" id="f-pages" name="f-pages" required>
+        </div>
+
+        <div class="form-field-wrapper">
+          <label for="f-read">Read already:</label>
+          <input type="checkbox" id="f-read">
+        </div>
+        <div id="f-options">
+          <input type="submit">
+          <button type="button" id="close-modal">Close</button>
+        </div>
+      </form>
+      
+    </dialog>
+    
+
+  </section>
+</body>
+</html>
