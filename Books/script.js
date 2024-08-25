@@ -1,7 +1,9 @@
 
 const myLibrary = [];
 
-const displayLibraryBtn = document.querySelector("#display-library");
+// const displayLibraryBtn = document.querySelector("#display-library");
+// displayLibraryBtn.style.display = "none";
+// displayLibraryBtn.addEventListener("click", displayLibrary);
 
 const table = document.querySelector("tbody");
 const tableHeader = document.querySelector("#table-header");
@@ -44,8 +46,6 @@ submitForm.addEventListener("click", (e) => {
     }
 });
 
-displayLibraryBtn.addEventListener("click", displayLibrary);
-
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
@@ -87,12 +87,11 @@ function newRow(obj, parent, extraChildren = []) {
     if (extraChildren.length > 0) {
         extraChildren.forEach((elem) => {
             tableRow.appendChild(elem);
-            console.log("!!!!!!!")
         });
     }
     
     return tableRow;
-}
+};
 
 function displayLibrary() {
     // clear table content
@@ -144,7 +143,6 @@ function displayLibrary() {
             table.appendChild(tableRow);
         });
     } else {
-            alert("Library is empty");
             tableHeader.style.visibility = "hidden";
         }
 };
