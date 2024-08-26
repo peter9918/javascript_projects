@@ -1,15 +1,8 @@
+
+const boardWrapper = document.querySelector("#board-wrapper");
+
 const Gameboard = (function() {
-    const squares = {
-        0: "",
-        1: "",
-        2: "",
-        3: "",
-        4: "",
-        5: "",
-        6: "",
-        7: "",
-        8: "",
-    };
+    const squares = ["","","","","","","","",""];
     const checkWin = function() {
         if (squares[0] && squares[0] === (squares[1] && squares[2]) ||
             squares[3] && squares[3] === (squares[4] && squares[5]) ||
@@ -30,10 +23,11 @@ const Gameboard = (function() {
         Object.values(squares).forEach((val) => {
             if (!val) {
                 draw = false;
+                return draw;
             }
-        })
+        });
         return draw;
-    }
+    };
     return { squares, checkWin, checkDraw };
 })();
 
@@ -47,11 +41,27 @@ function createPlayer(name, mark) {
     return {name, mark, placeMark};
 };
 
+const Display = (function() {
+    const displayBoard = function(board) {
+        board.forEach((elem) => {
+            const square = document.createElement("div");
+            square.innerText = elem;
+            boardWrapper.appendChild(square);
+        });
+    };
+    return { displayBoard };
+})();
+
 const player1 = createPlayer("Player1", "X");
 const player2 = createPlayer("Player2", "O");
 
 
 player1.placeMark(0);
+player1.placeMark(3);
+player1.placeMark(6);
+
+Display.displayBoard(Gameboard.squares);
+
 
 console.log(Gameboard.squares);
 console.log(Gameboard.checkWin())
