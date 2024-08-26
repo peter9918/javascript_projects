@@ -43,11 +43,28 @@ function createPlayer(name, mark) {
 
 const Display = (function() {
     const displayBoard = function(board) {
+        let counter = 0;
         board.forEach((elem) => {
+            // create square elem
             const square = document.createElement("div");
             square.innerText = elem;
+            square.setAttribute("data-count", counter);
+            square.addEventListener("click", () => {
+                // update game board value
+                player1.placeMark(square.attributes["data-count"].nodeValue);
+                // update display value
+                updateSquare(square.attributes["data-count"].nodeValue);
+            });
+            counter ++;
             boardWrapper.appendChild(square);
         });
+
+    const updateSquare = function(square) {
+        // select all square elements
+        const displaySquares = document.querySelectorAll("#board-wrapper div");
+        // update display square inner text
+        displaySquares[square].innerText = Gameboard.squares[square];
+        };
     };
     return { displayBoard };
 })();
@@ -56,13 +73,15 @@ const player1 = createPlayer("Player1", "X");
 const player2 = createPlayer("Player2", "O");
 
 
-player1.placeMark(0);
-player1.placeMark(3);
-player1.placeMark(6);
-
 Display.displayBoard(Gameboard.squares);
 
+// player1.placeMark(0);
+// player1.placeMark(3);
+// player1.placeMark(6);
 
-console.log(Gameboard.squares);
-console.log(Gameboard.checkWin())
-console.log(Gameboard.checkDraw())
+
+
+
+// console.log(Gameboard.squares);
+// console.log(Gameboard.checkWin())
+// console.log(Gameboard.checkDraw())
