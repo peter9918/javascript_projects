@@ -1,9 +1,14 @@
 
+
+// select wrappers
 const boardWrapper = document.querySelector("#board-wrapper");
 const winningMessageWrapper = document.querySelector("#winning-message-wrapper");
 
 const Gameboard = (function() {
+    // define logical board
     const squares = ["","","","","","","","",""];
+
+    // define winning combinations
     const winningCombinations = [
         [0, 1, 2], // top row
         [3, 4, 5], // middle row
@@ -16,6 +21,8 @@ const Gameboard = (function() {
     ];
     
     const checkWin = function() {
+        // loop trough winning combinations
+        // return true if one is found, return false otherwise
         for (let i = 0; i < winningCombinations.length; i++) {
             const [a, b, c] = winningCombinations[i];
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
@@ -26,21 +33,27 @@ const Gameboard = (function() {
     };
     
     const checkDraw = function() {
-        let draw = true; 
-        Object.values(squares).forEach((val) => {
-            if (!val) {
-                draw = false;
-                return draw;
-            }
-        });
-        return draw;
+        // check if there is no win on board
+        if (!checkWin()) {
+            // check if the board is full
+            let draw = true; 
+            Object.values(squares).forEach((val) => {
+                if (!val) {
+                    draw = false;
+                    return draw;
+                }
+            });
+            return draw;
+        }
     };
 
+    // clear logical game board
     const clear = function() {
         for (let i = 0; i < squares.length; i++) {
             squares[i] = "";
         };
-    }
+    };
+
     return { squares, checkWin, checkDraw, clear };
 })();
 
@@ -51,11 +64,12 @@ function createPlayer(name, mark, isTurn) {
             // place mark in display board as well 
             Display.updateSquare(square);
     };
+
     return {name, mark, isTurn, placeMark};
 };
 
 const Display = (function() {
-
+    // update inner text of a square
     const updateSquare = function(square) {
         // select all square elements
         const displaySquares = document.querySelectorAll("#board-wrapper div");
@@ -63,6 +77,7 @@ const Display = (function() {
         displaySquares[square].innerText = Gameboard.squares[square];
         };
 
+    // clear display game board
     const clear = function() {
         const displaySquares = document.querySelectorAll("#board-wrapper div");
         displaySquares.forEach((square) => {
@@ -70,6 +85,7 @@ const Display = (function() {
         });
     };
 
+    // display winning message
     const winningMessage = function(mark, isDraw = false) {
         // create message element
         const message = document.createElement("h2");
@@ -78,6 +94,7 @@ const Display = (function() {
         } else {
             message.innerText = `${mark}'s WIN!`;
         }
+
         // create play again button element
         const resetButton = document.createElement("button");
         resetButton.innerText = "Play again";
@@ -86,15 +103,21 @@ const Display = (function() {
             winningMessageWrapper.childNodes.forEach(() => {
                 winningMessageWrapper.lastChild.remove();
             });
+
+            // reset game
             Game.reset();
         });
         
+        // append elements to wrapper
         winningMessageWrapper.appendChild(message);
         winningMessageWrapper.appendChild(resetButton);
     };
 
     const displayBoard = function(board) {
+        // counter needed for data-count value of squares
         let counter = 0;
+
+        // create square elements
         board.forEach((elem) => {
             // create square elem
             const square = document.createElement("div");
@@ -127,6 +150,7 @@ const Display = (function() {
                 }
             });
             counter ++;
+
             // insert square in wrapper
             boardWrapper.appendChild(square);
         });
@@ -147,6 +171,8 @@ const Game = (function() {
         // set x's to be first and o's to be second
         player1.isTurn = true;
         player2.isTurn = false;
+
+        // clear logical game board and display game board
         Gameboard.clear();
         Display.clear();
     };
@@ -154,7 +180,9 @@ const Game = (function() {
     return { switchTurns, reset };
 })();
 
+// create 2 players
 const player1 = createPlayer("Player1", "X", true);
 const player2 = createPlayer("Player2", "O", false);
 
+// display board on page load
 Display.displayBoard(Gameboard.squares);
