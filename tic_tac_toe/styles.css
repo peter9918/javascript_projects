@@ -8,6 +8,7 @@ body {
   height: 100vh;
   width: 100vw;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -26,4 +27,21 @@ body {
   width: 100px;
   height: 100px;
   border: 1px solid black;
+}
+
+#winning-message-wrapper {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+}
+
+#winning-message-wrapper button {
+  font-size: 2rem;
+  padding: .3rem;
+}
+
+#winning-message-wrapper h2 {
+  font-size: 3rem;
 }

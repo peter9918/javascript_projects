@@ -1,5 +1,6 @@
 
 const boardWrapper = document.querySelector("#board-wrapper");
+const winningMessageWrapper = document.querySelector("#winning-message-wrapper");
 
 const Gameboard = (function() {
     const squares = ["","","","","","","","",""];
@@ -34,7 +35,13 @@ const Gameboard = (function() {
         });
         return draw;
     };
-    return { squares, checkWin, checkDraw };
+
+    const clear = function() {
+        for (let i = 0; i < squares.length; i++) {
+            squares[i] = "";
+        };
+    }
+    return { squares, checkWin, checkDraw, clear };
 })();
 
 function createPlayer(name, mark, isTurn) {
@@ -47,10 +54,45 @@ function createPlayer(name, mark, isTurn) {
     return {name, mark, isTurn, placeMark};
 };
 
-const player1 = createPlayer("Player1", "X", true);
-const player2 = createPlayer("Player2", "O", false);
-
 const Display = (function() {
+
+    const updateSquare = function(square) {
+        // select all square elements
+        const displaySquares = document.querySelectorAll("#board-wrapper div");
+        // update display square inner text
+        displaySquares[square].innerText = Gameboard.squares[square];
+        };
+
+    const clear = function() {
+        const displaySquares = document.querySelectorAll("#board-wrapper div");
+        displaySquares.forEach((square) => {
+            square.innerText = "";
+        });
+    };
+
+    const winningMessage = function(mark, isDraw = false) {
+        // create message element
+        const message = document.createElement("h2");
+        if (isDraw) {
+            message.innerText = `DRAW!`;
+        } else {
+            message.innerText = `${mark}'s WIN!`;
+        }
+        // create play again button element
+        const resetButton = document.createElement("button");
+        resetButton.innerText = "Play again";
+        resetButton.addEventListener("click", () => {
+            // remove children from message wrapper
+            winningMessageWrapper.childNodes.forEach(() => {
+                winningMessageWrapper.lastChild.remove();
+            });
+            Game.reset();
+        });
+        
+        winningMessageWrapper.appendChild(message);
+        winningMessageWrapper.appendChild(resetButton);
+    };
+
     const displayBoard = function(board) {
         let counter = 0;
         board.forEach((elem) => {
@@ -61,55 +103,58 @@ const Display = (function() {
             square.addEventListener("click", () => {
                 // check if square is empty
                 if (square.innerText === "") {
-                    // update game board value
-                    console.log("!!!!!!!!!!")
+                    // check who's turn it is
                     if (player1.isTurn) {
+                        // place mark
                         player1.placeMark(square.attributes["data-count"].nodeValue);
+                        // check for win
                         if (Gameboard.checkWin()) {
-                            console.log(`${player1.mark}'s win`)
-                            console.log(Gameboard.squares)
+                            winningMessage(player1.mark);
+                        // check for draw
                         } else if (Gameboard.checkDraw()) {
-                            console.log("draw");
+                            winningMessage(player1.mark, true);
                         }
                     } else {
                         player2.placeMark(square.attributes["data-count"].nodeValue);
                         if (Gameboard.checkWin()) {
-                            console.log(`${player2.mark}'s win`)
-                            console.log(Gameboard.squares)
+                            winningMessage(player2.mark);
                         } else if (Gameboard.checkDraw()) {
-                            console.log("draw");
+                            winningMessage(player2.mark, true);
                         }
                     }
-                // switch turns
-                player1.isTurn = !player1.isTurn
-                player2.isTurn = !player2.isTurn
+                    // switch turns
+                    Game.switchTurns();
                 }
             });
             counter ++;
+            // insert square in wrapper
             boardWrapper.appendChild(square);
         });
     };
-
-    const updateSquare = function(square) {
-        // select all square elements
-        const displaySquares = document.querySelectorAll("#board-wrapper div");
-        // update display square inner text
-        displaySquares[square].innerText = Gameboard.squares[square];
-        };
     
-    return { displayBoard, updateSquare };
+    return { displayBoard, updateSquare, clear };
 })();
 
-Display.displayBoard(Gameboard.squares);
-
-// const Game = (function() {
+const Game = (function() {
+    // switch turns
+    const switchTurns = function() {
+        player1.isTurn = !player1.isTurn;
+        player2.isTurn = !player2.isTurn;
+    };
     
-// })
+    // reset game
+    const reset = function() {
+        // set x's to be first and o's to be second
+        player1.isTurn = true;
+        player2.isTurn = false;
+        Gameboard.clear();
+        Display.clear();
+    };
 
-// player1.placeMark(0);
-// player1.placeMark(3);
-// player1.placeMark(6);
+    return { switchTurns, reset };
+})();
 
-// console.log(Gameboard.squares);
-// console.log(Gameboard.checkWin())
-// console.log(Gameboard.checkDraw())
+const player1 = createPlayer("Player1", "X", true);
+const player2 = createPlayer("Player2", "O", false);
+
+Display.displayBoard(Gameboard.squares);
