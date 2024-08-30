@@ -4,6 +4,19 @@
 const boardWrapper = document.querySelector("#board-wrapper");
 const winningMessageWrapper = document.querySelector("#winning-message-wrapper");
 
+// select player 1 info
+const player1DisplayWrapper = document.querySelector("#players-left");
+const player1DisplayName = document.querySelector("#player1-name");
+const player1DisplayMark = document.querySelector("#player1-mark");
+const player1DisplayScore = document.querySelector("#player1-score");
+
+// select player 2 info
+const player2DisplayWrapper = document.querySelector("#players-right");
+const player2DisplayName = document.querySelector("#player2-name");
+const player2DisplayMark = document.querySelector("#player2-mark");
+const player2DisplayScore = document.querySelector("#player2-score");
+
+
 const Gameboard = (function() {
     // define logical board
     const squares = ["","","","","","","","",""];
@@ -57,15 +70,22 @@ const Gameboard = (function() {
     return { squares, checkWin, checkDraw, clear };
 })();
 
-function createPlayer(name, mark, isTurn) {
+function Player(name, mark, isTurn) {
+    this.score = 0;
+    this.name = name;
+    this.mark = mark;
+    this.isTurn = isTurn;
     // place mark in gameboard square if square is empty
-    const placeMark = function(square) {
-            Gameboard.squares[square] = mark;
+    this.placeMark = function(square) {
+            console.log(this.mark)
+            Gameboard.squares[square] = this.mark;
             // place mark in display board as well 
             Display.updateSquare(square);
     };
-
-    return {name, mark, isTurn, placeMark};
+    // change name method
+    this.changeName = function(newName) {
+        this.name = newName;
+    };
 };
 
 const Display = (function() {
@@ -86,13 +106,13 @@ const Display = (function() {
     };
 
     // display winning message
-    const winningMessage = function(mark, isDraw = false) {
+    const winningMessage = function(name, isDraw = false) {
         // create message element
         const message = document.createElement("h2");
         if (isDraw) {
             message.innerText = `DRAW!`;
         } else {
-            message.innerText = `${mark}'s WIN!`;
+            message.innerText = `${name} WINS!`;
         }
 
         // create play again button element
@@ -128,25 +148,34 @@ const Display = (function() {
                 if (square.innerText === "") {
                     // check who's turn it is
                     if (player1.isTurn) {
+                        console.log("P1")
                         // place mark
                         player1.placeMark(square.attributes["data-count"].nodeValue);
                         // check for win
                         if (Gameboard.checkWin()) {
-                            winningMessage(player1.mark);
+                            winningMessage(player1.name);
+                            player1.score ++;
                         // check for draw
                         } else if (Gameboard.checkDraw()) {
-                            winningMessage(player1.mark, true);
+                            winningMessage(player1.name, true);
+                        } else {
+                            // switch turns
+                            Game.switchTurns();
                         }
                     } else {
+                        console.log("P2")
                         player2.placeMark(square.attributes["data-count"].nodeValue);
                         if (Gameboard.checkWin()) {
-                            winningMessage(player2.mark);
+                            winningMessage(player2.name);
+                            player2.score ++;
                         } else if (Gameboard.checkDraw()) {
-                            winningMessage(player2.mark, true);
+                            winningMessage(player2.name, true);
+                        } else {
+                            // switch turns
+                            Game.switchTurns();
                         }
                     }
-                    // switch turns
-                    Game.switchTurns();
+                    
                 }
             });
             counter ++;
@@ -160,17 +189,48 @@ const Display = (function() {
 })();
 
 const Game = (function() {
-    // switch turns
+    // keep track of turns played
+    let turn = 1;
+
     const switchTurns = function() {
-        player1.isTurn = !player1.isTurn;
-        player2.isTurn = !player2.isTurn;
+        [player1.isTurn, player2.isTurn] = [player2.isTurn, player1.isTurn];
+        player1DisplayWrapper.classList.toggle("players-is-turn");
+        player2DisplayWrapper.classList.toggle("players-is-turn");
     };
     
     // reset game
     const reset = function() {
-        // set x's to be first and o's to be second
-        player1.isTurn = true;
-        player2.isTurn = false;
+        // increment turn
+        turn ++;
+
+        // reset player wrapper classes
+        [player1DisplayWrapper.classList, player2DisplayWrapper.classList] = [[], []];
+        
+        // check if turn is odd
+        if (turn % 2 != 0) {
+            // set marks
+            [player1.mark, player2.mark] = ["X", "O"];
+            // set display marks
+            [player1DisplayMark.innerText,
+            player2DisplayMark.innerText] = [player1.mark, player2.mark];
+            // set turn
+            [player1.isTurn, player2.isTurn] = [true, false];
+            // toggle is turn class
+            player1DisplayWrapper.classList.toggle("players-is-turn");
+        } else {
+            [player1.mark, player2.mark] = ["O", "X"];
+            // set display marks
+            [player1DisplayMark.innerText,
+            player2DisplayMark.innerText] = [player1.mark, player2.mark];
+            // set turn
+            [player1.isTurn, player2.isTurn] = [false, true];
+            // toggle is turn class
+            player2DisplayWrapper.classList.toggle("players-is-turn");
+        }
+
+        // update players display score
+        player1DisplayScore.innerText = player1.score;
+        player2DisplayScore.innerText = player2.score;
 
         // clear logical game board and display game board
         Gameboard.clear();
@@ -181,8 +241,8 @@ const Game = (function() {
 })();
 
 // create 2 players
-const player1 = createPlayer("Player1", "X", true);
-const player2 = createPlayer("Player2", "O", false);
+const player1 = new Player("Player1", "X", true);
+const player2 = new Player("Player2", "O", false);
 
 // display board on page load
 Display.displayBoard(Gameboard.squares);
