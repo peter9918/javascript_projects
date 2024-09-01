@@ -123,13 +123,16 @@ const Display = (function() {
         const confirmNameBtn = document.createElement("button");
         confirmNameBtn.innerText = "OK";
         confirmNameBtn.addEventListener("click", () => {
-            // enable game
-            Game.isDisabled = false;
-            // update player object name and displaay name
-            player.name = changeNameInput.value;
-            nameNode.innerText = player.name + ":";
-            // replace wrapper with new display name
-            changeNameWrapper.replaceWith(nameNode);
+            // check if input name is not empty
+            if (changeNameInput.value) {
+                // enable game
+                Game.isDisabled = false;
+                // update player object name and displaay name
+                player.name = changeNameInput.value;
+                nameNode.innerText = player.name + ":";
+                // replace wrapper with new display name
+                changeNameWrapper.replaceWith(nameNode);
+            }
         });
         // add ellements to wrapper
         changeNameWrapper.append(changeNameInput, confirmNameBtn);
