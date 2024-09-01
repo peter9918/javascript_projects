@@ -23,6 +23,7 @@ button {
   padding: .2rem;
   background-color: #020c34;
   color: #ce2ad6;
+  cursor: pointer;
 }
 
 #players {

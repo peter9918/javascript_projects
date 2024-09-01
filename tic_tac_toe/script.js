@@ -89,9 +89,28 @@ function Player(name, mark, isTurn) {
 const Display = (function() {
     // select change name buttons
     const player1ChangeNameBtn = document.querySelector("#player1-change-name");
-    player1ChangeNameBtn.addEventListener("click", () => changeName(player1, player1DisplayName));
+    player1ChangeNameBtn.addEventListener("click", () => {
+        // check if game is disabled
+        // Needed to limit change name to one player at a time
+        if (!Game.isDisabled) {
+            // disable game
+            Game.isDisabled = true;
+            // enter change name mode
+            changeName(player1, player1DisplayName);
+        }
+    });
     const player2ChangeNameBtn = document.querySelector("#player2-change-name");
-    player2ChangeNameBtn.addEventListener("click", () => changeName(player2, player2DisplayName));
+    player2ChangeNameBtn.addEventListener("click", () => {
+        // check if game is disabled
+        // Needed to limit change name to one player at a time
+        if (!Game.isDisabled) {
+            // disable game
+            Game.isDisabled = true;
+            // enter change name mode
+            changeName(player2, player2DisplayName);
+        }
+    });
+
     // change name of player
     const changeName = function(player, nameNode) {
         // create wrapper
@@ -104,6 +123,8 @@ const Display = (function() {
         const confirmNameBtn = document.createElement("button");
         confirmNameBtn.innerText = "OK";
         confirmNameBtn.addEventListener("click", () => {
+            // enable game
+            Game.isDisabled = false;
             // update player object name and displaay name
             player.name = changeNameInput.value;
             nameNode.innerText = player.name + ":";
@@ -172,8 +193,8 @@ const Display = (function() {
             square.innerText = elem;
             square.setAttribute("data-count", counter);
             square.addEventListener("click", () => {
-                // check if square is empty
-                if (square.innerText === "") {
+                // check if square is empty and game is enabled
+                if (square.innerText === "" && !Game.isDisabled) {
                     // check who's turn it is
                     if (player1.isTurn) {
                         // place mark
@@ -217,6 +238,10 @@ const Display = (function() {
 const Game = (function() {
     // keep track of turns played
     let turn = 1;
+
+    // determine if game is disabled
+    // need to disable game during player name change
+    const isDisabled = false;
 
     const switchTurns = function() {
         [player1.isTurn, player2.isTurn] = [player2.isTurn, player1.isTurn];
@@ -263,7 +288,7 @@ const Game = (function() {
         Display.clear();
     };
 
-    return { switchTurns, reset };
+    return { switchTurns, reset, isDisabled };
 })();
 
 // create 2 players
