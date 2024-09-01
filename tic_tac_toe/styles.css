@@ -18,10 +18,18 @@ h1 {
   margin: 2rem;
 }
 
+button {
+  font-size: 1.2rem;
+  padding: .2rem;
+  background-color: #020c34;
+  color: #ce2ad6;
+}
+
 #players {
   color: #020c34;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
   margin-bottom: 2rem;
 }
 
@@ -33,9 +41,24 @@ h1 {
   margin-bottom: .5rem;
 }
 
-#players-left,
-#players-right {
+.change-name-wrapper {
+  display: flex;
+  align-items: center;
+  gap: .2rem;
+}
+
+.change-name-wrapper input {
+  font-size: 2rem;
+  width: 10ch;
+}
+
+#player1-wrapper,
+#player2-wrapper {
   padding: .5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 280px;
 }
 
 #player1-mark,
@@ -47,7 +70,6 @@ h1 {
 
 .players-is-turn {
   border-bottom: 4px solid #ce2ad6;
-  
 }
 
 #game {

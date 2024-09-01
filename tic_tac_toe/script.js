@@ -5,17 +5,16 @@ const boardWrapper = document.querySelector("#board-wrapper");
 const winningMessageWrapper = document.querySelector("#winning-message-wrapper");
 
 // select player 1 info
-const player1DisplayWrapper = document.querySelector("#players-left");
+const player1DisplayWrapper = document.querySelector("#player1-wrapper");
 const player1DisplayName = document.querySelector("#player1-name");
 const player1DisplayMark = document.querySelector("#player1-mark");
 const player1DisplayScore = document.querySelector("#player1-score");
 
 // select player 2 info
-const player2DisplayWrapper = document.querySelector("#players-right");
+const player2DisplayWrapper = document.querySelector("#player2-wrapper");
 const player2DisplayName = document.querySelector("#player2-name");
 const player2DisplayMark = document.querySelector("#player2-mark");
 const player2DisplayScore = document.querySelector("#player2-score");
-
 
 const Gameboard = (function() {
     // define logical board
@@ -77,7 +76,6 @@ function Player(name, mark, isTurn) {
     this.isTurn = isTurn;
     // place mark in gameboard square if square is empty
     this.placeMark = function(square) {
-            console.log(this.mark)
             Gameboard.squares[square] = this.mark;
             // place mark in display board as well 
             Display.updateSquare(square);
@@ -89,6 +87,36 @@ function Player(name, mark, isTurn) {
 };
 
 const Display = (function() {
+    // select change name buttons
+    const player1ChangeNameBtn = document.querySelector("#player1-change-name");
+    player1ChangeNameBtn.addEventListener("click", () => changeName(player1, player1DisplayName));
+    const player2ChangeNameBtn = document.querySelector("#player2-change-name");
+    player2ChangeNameBtn.addEventListener("click", () => changeName(player2, player2DisplayName));
+    // change name of player
+    const changeName = function(player, nameNode) {
+        // create wrapper
+        const changeNameWrapper = document.createElement("div");
+        changeNameWrapper.classList.add("change-name-wrapper");
+        // create input for new name
+        const changeNameInput = document.createElement("input");
+        changeNameInput.value = player.name;
+        // create button to confirm name
+        const confirmNameBtn = document.createElement("button");
+        confirmNameBtn.innerText = "OK";
+        confirmNameBtn.addEventListener("click", () => {
+            // update player object name and displaay name
+            player.name = changeNameInput.value;
+            nameNode.innerText = player.name + ":";
+            // replace wrapper with new display name
+            changeNameWrapper.replaceWith(nameNode);
+        });
+        // add ellements to wrapper
+        changeNameWrapper.append(changeNameInput, confirmNameBtn);
+        // replace current display name with wwrapper
+        nameNode.replaceWith(changeNameWrapper);
+        // focus on input and select value      
+        changeNameInput.select()
+    };
     // update inner text of a square
     const updateSquare = function(square) {
         // select all square elements
@@ -148,7 +176,6 @@ const Display = (function() {
                 if (square.innerText === "") {
                     // check who's turn it is
                     if (player1.isTurn) {
-                        console.log("P1")
                         // place mark
                         player1.placeMark(square.attributes["data-count"].nodeValue);
                         // check for win
@@ -163,7 +190,6 @@ const Display = (function() {
                             Game.switchTurns();
                         }
                     } else {
-                        console.log("P2")
                         player2.placeMark(square.attributes["data-count"].nodeValue);
                         if (Gameboard.checkWin()) {
                             winningMessage(player2.name);
@@ -241,8 +267,8 @@ const Game = (function() {
 })();
 
 // create 2 players
-const player1 = new Player("Player1", "X", true);
-const player2 = new Player("Player2", "O", false);
+const player1 = new Player("PLAYER1", "X", true);
+const player2 = new Player("PLAYER2", "O", false);
 
 // display board on page load
 Display.displayBoard(Gameboard.squares);
