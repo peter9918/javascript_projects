@@ -16,10 +16,12 @@ function createSquares(num){
         let div = document.createElement("div");
         div.classList.add("square");
         div.addEventListener("mouseover", () => {
+            div.style.transition = ""
             div.style.backgroundColor = "pink";
         })
         div.addEventListener("mouseout", () => {
-            div.style.backgroundColor = "white";
+            div.style.transition = "background-color 1s ease-in-out"
+            div.style.backgroundColor = "#3f3f3f";
         })
         wrapper.appendChild(div);
         div.style.flexBasis = `${640 / (Math.sqrt(num))}px`

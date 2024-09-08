@@ -9,12 +9,13 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #3f3f3f;
 }
 
 #change-squares {
   margin: 20px;
   padding: 10px;
-  background-color: #3f3f3f;
+  background-color: #585858;
   color: #e8e8e8;
   font-size: 1.5rem;
 }
@@ -30,6 +31,6 @@ body {
 .square {
   width: auto;
   height: auto;
-  border: 1px solid black;
-  flex-basis: 40px;  
+  border: 1px solid #737373;
+  flex-basis: 40px; 
 }
