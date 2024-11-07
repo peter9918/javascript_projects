@@ -19,10 +19,20 @@ h1 {
 }
 
 button {
-  font-size: 1.2rem;
-  padding: .2rem;
   background-color: #020c34;
+  border: 0;
   color: #ce2ad6;
+  width: fit-content;
+  font-size: 1.2rem;
+  padding: .6rem;
+  border-radius: 1.2rem;
+  transition: .2s ease-in;
+}
+
+button:hover,
+button:focus {
+  color: #ce2ad6;
+  background-color: #121c44;
   cursor: pointer;
 }
 
@@ -108,9 +118,7 @@ button {
 
 #winning-message-wrapper button {
   font-size: 2rem;
-  padding: .3rem;
-  background-color: #020c34;
-  color: #ce2ad6;
+  padding: .6rem;
 }
 
 #winning-message-wrapper h2 {
