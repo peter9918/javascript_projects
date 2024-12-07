@@ -43,6 +43,11 @@ button {
   border-radius: 10px;
 }
 
+button:hover {
+  cursor: pointer;
+  background-color: #1919bb;
+}
+
 .numbers {
   display: grid;
   grid-template-rows:  repeat(5, 80px);
